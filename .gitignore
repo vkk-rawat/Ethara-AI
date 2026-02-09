@@ -8,6 +8,7 @@ __pycache__/
 .env
 .env.local
 .env.production
+render.yml
 
 # Build output
 dist/
@@ -29,3 +30,4 @@ npm-debug.log*
 
 # Temp files
 tmpclaude*
+.gitattributes

@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import Header from "./components/Header/Header";
-import Dashboard from "./components/Dashboard/Dashboard";
-import EmployeeList from "./components/Employee/EmployeeList";
-import AttendanceManager from "./components/Attendance/AttendanceManager";
 import Toast from "./components/common/Toast";
+import LoadingSpinner from "./components/common/LoadingSpinner";
 import "./App.css";
+
+const Dashboard = lazy(() => import("./components/Dashboard/Dashboard"));
+const EmployeeList = lazy(() => import("./components/Employee/EmployeeList"));
+const AttendanceManager = lazy(
+  () => import("./components/Attendance/AttendanceManager"),
+);
 
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -69,7 +73,11 @@ function App() {
     <div className="app">
       <Header activeTab={activeTab} onTabChange={handleTabChange} />
 
-      <main className="main-content">{renderContent()}</main>
+      <main className="main-content">
+        <Suspense fallback={<LoadingSpinner message="Loading..." />}>
+          {renderContent()}
+        </Suspense>
+      </main>
 
       {toast && (
         <Toast

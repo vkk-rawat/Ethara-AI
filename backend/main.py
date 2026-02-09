@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import asyncio
 
 from config import settings
 from database import connect_db, close_db
@@ -9,11 +10,19 @@ from routes.employees import router as employees_router
 from routes.attendance import router as attendance_router
 
 
+async def keep_alive():
+    """Periodic self-ping to prevent Render free-tier cold starts."""
+    while True:
+        await asyncio.sleep(600)  # every 10 minutes
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_db()
+    task = asyncio.create_task(keep_alive())
     print(f"🚀 Server running on http://localhost:{settings.port}")
     yield
+    task.cancel()
     await close_db()
     print("Server shutdown complete")
 

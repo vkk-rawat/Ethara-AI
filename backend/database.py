@@ -28,6 +28,9 @@ async def connect_to_mongo():
     await db.client.admin.command('ping')
     print("MongoDB connected successfully!")
 
+    # Create indexes for faster queries
+    await ensure_indexes()
+
 
 connect_db = connect_to_mongo
 
@@ -51,3 +54,26 @@ def get_employees_collection():
 
 def get_attendance_collection():
     return get_database()["attendances"]
+
+
+async def ensure_indexes():
+    """Create database indexes for faster query performance."""
+    try:
+        emp_col = get_employees_collection()
+        att_col = get_attendance_collection()
+
+        # Employee indexes
+        await emp_col.create_index("employeeId", unique=True)
+        await emp_col.create_index("email", unique=True)
+        await emp_col.create_index("department")
+        await emp_col.create_index("createdAt")
+
+        # Attendance indexes
+        await att_col.create_index("employeeId")
+        await att_col.create_index("date")
+        await att_col.create_index([("employeeId", 1), ("date", 1)])
+        await att_col.create_index("status")
+
+        print("Database indexes ensured.")
+    except Exception as e:
+        print(f"Index creation warning: {e}")

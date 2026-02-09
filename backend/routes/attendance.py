@@ -19,10 +19,41 @@ def serialize_attendance(attendance: dict) -> dict:
     return attendance
 
 
+async def populate_employees(records: list) -> list:
+    """Batch-load employee info for attendance records (avoids N+1 queries)."""
+    if not records:
+        return records
+
+    employees_collection = get_employees_collection()
+    emp_ids = list({r["employeeId"]
+                   for r in records if isinstance(r.get("employeeId"), ObjectId)})
+
+    if not emp_ids:
+        return records
+
+    cursor = employees_collection.find({"_id": {"$in": emp_ids}})
+    emp_map = {}
+    async for emp in cursor:
+        emp_map[emp["_id"]] = {
+            "_id": str(emp["_id"]),
+            "fullName": emp.get("fullName", ""),
+            "employeeId": emp.get("employeeId", ""),
+            "department": emp.get("department", "")
+        }
+
+    for record in records:
+        eid = record.get("employeeId")
+        if isinstance(eid, ObjectId) and eid in emp_map:
+            record["employeeId"] = emp_map[eid]
+
+    return records
+
+
 @router.get("")
 async def get_all_attendance(
     date_filter: Optional[str] = Query(None, alias="date"),
-    employee_id: Optional[str] = Query(None, alias="employeeId")
+    employee_id: Optional[str] = Query(None, alias="employeeId"),
+    limit: Optional[int] = Query(None, alias="limit", ge=1, le=10000)
 ):
     try:
         collection = get_attendance_collection()
@@ -44,19 +75,9 @@ async def get_all_attendance(
             query["employeeId"] = ObjectId(employee_id)
 
         cursor = collection.find(query).sort("date", -1)
-        records = await cursor.to_list(length=10000)
+        records = await cursor.to_list(length=limit or 10000)
 
-        employees_collection = get_employees_collection()
-        for record in records:
-            if "employeeId" in record:
-                employee = await employees_collection.find_one({"_id": record["employeeId"]})
-                if employee:
-                    record["employeeId"] = {
-                        "_id": str(employee["_id"]),
-                        "fullName": employee.get("fullName", ""),
-                        "employeeId": employee.get("employeeId", ""),
-                        "department": employee.get("department", "")
-                    }
+        await populate_employees(records)
 
         return {
             "success": True,
@@ -125,13 +146,14 @@ async def get_employee_attendance(employee_id: str):
 
         total_present = sum(1 for r in records if r.get("status") == "Present")
 
+        emp_info = {
+            "_id": str(employee["_id"]),
+            "fullName": employee.get("fullName", ""),
+            "employeeId": employee.get("employeeId", ""),
+            "department": employee.get("department", "")
+        }
         for record in records:
-            record["employeeId"] = {
-                "_id": str(employee["_id"]),
-                "fullName": employee.get("fullName", ""),
-                "employeeId": employee.get("employeeId", ""),
-                "department": employee.get("department", "")
-            }
+            record["employeeId"] = emp_info
 
         return {
             "success": True,
@@ -168,16 +190,7 @@ async def get_attendance(attendance_id: str):
                         "message": "Attendance record not found"}
             )
 
-        if "employeeId" in record:
-            employees_collection = get_employees_collection()
-            employee = await employees_collection.find_one({"_id": record["employeeId"]})
-            if employee:
-                record["employeeId"] = {
-                    "_id": str(employee["_id"]),
-                    "fullName": employee.get("fullName", ""),
-                    "employeeId": employee.get("employeeId", ""),
-                    "department": employee.get("department", "")
-                }
+        await populate_employees([record])
 
         return {
             "success": True,

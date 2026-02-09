@@ -2,6 +2,9 @@ const API_BASE_URL = (
   import.meta.env.VITE_API_URL || "http://localhost:5000/api"
 ).replace(/\/+$/, "");
 
+// Pre-warm backend on page load (wakes Render free-tier instances)
+fetch(`${API_BASE_URL.replace(/\/api$/, "")}/api/health`).catch(() => {});
+
 const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
 

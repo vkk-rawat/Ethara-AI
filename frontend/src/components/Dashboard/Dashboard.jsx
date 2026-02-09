@@ -16,15 +16,17 @@ const Dashboard = ({ onNavigate }) => {
       setLoading(true);
       setError(null);
 
-      const [summaryRes, employeesRes, attendanceRes] = await Promise.all([
+      const [summaryRes, employeesRes] = await Promise.all([
         attendanceAPI.getSummary(),
         employeeAPI.getAll(),
-        attendanceAPI.getAll(),
       ]);
 
       setStats(summaryRes.data);
       setEmployees(employeesRes.data || []);
-      setRecentAttendance((attendanceRes.data || []).slice(0, 10));
+
+      // Fetch only recent attendance (limited) instead of ALL records
+      const attendanceRes = await attendanceAPI.getAll({ limit: 10 });
+      setRecentAttendance(attendanceRes.data || []);
     } catch (err) {
       setError(err.message);
     } finally {
