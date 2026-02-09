@@ -1,3 +1,4 @@
+## Might take some time to load the application 
 # HRMS Lite — Human Resource Management System
 
 This is a assignment project for the EThara-AI done by Vivek Rawat.
