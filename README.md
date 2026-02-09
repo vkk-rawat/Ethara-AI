@@ -1,4 +1,5 @@
-# HRMS Lite — Human Resource Management System
+## Might take some time to load the application 
+# HRMS . — Human Resource Management System
 
 This is a assignment project for the EThara-AI done by Vivek Rawat.
 ---
@@ -16,32 +17,13 @@ This is a assignment project for the EThara-AI done by Vivek Rawat.
 
 ## 📋 Project Overview
 
-HRMS Lite is a web-based internal HR tool that allows a single admin user to:
+HRMS  is a web-based internal HR tool that allows a single admin user to:
 
 - **Employee Management** — Add, view, and delete employee records (Employee ID, Full Name, Email, Department)
 - **Attendance Tracking** — Mark daily attendance (Present / Absent), view per-employee records
 - **Dashboard** — Real-time summary with total employees, attendance rate, present/absent counts, and recent activity
 
 The application is built with a **React** frontend and a **Python FastAPI** backend, persisting data in **MongoDB Atlas**.
-
----
-
-## � Screenshots
-
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
-
-### Employee List
-![Employee List](screenshots/employee-list.png)
-
-### Add Employee
-![Add Employee](screenshots/add-employee.png)
-
-### Attendance Manager
-![Attendance Manager](screenshots/attendance-manager.png)
-
-### Mark Attendance
-![Mark Attendance](screenshots/mark-attendance.png)
 
 ---
 
@@ -153,7 +135,7 @@ Ethara-AI/
 - **Email format** — Validated via Pydantic `EmailStr`; auto-lowercased
 - **Duplicate handling** — Unique constraints on Employee ID and Email
 - **Date format** — Attendance date validated as `YYYY-MM-DD`
-- **Attendance status** — Restricted to `"Present"` or `"Absent"` (Literal type)
+- **Attendance status** — Restricted to `"Present"` or `"Absent"` (.ral type)
 - **Duplicate attendance** — Prevents marking same employee twice on the same date
 
 ### Error Responses
@@ -209,7 +191,7 @@ Create a `.env` file in `backend/`:
 
 ```env
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/
-DATABASE_NAME=hrms-lite
+DATABASE_NAME=hrms-.
 PORT=5000
 ```
 
@@ -253,7 +235,7 @@ The repository includes a `render.yaml` blueprint for one-click setup:
 5. Set **Start Command** → `uvicorn main:app --host 0.0.0.0 --port $PORT`
 6. Add **Environment Variables**:
    - `MONGODB_URI` — Your MongoDB Atlas connection string
-   - `DATABASE_NAME` — `hrms-lite`
+   - `DATABASE_NAME` — `hrms-.`
 
 > ⚠️ **MongoDB Atlas Network Access:** Add `0.0.0.0/0` to the IP Access List to allow connections from Render's dynamic IPs.
 
