@@ -1,23 +1,36 @@
-## Might take some time to load the application 
+## Might take some time to load the application
+
 # HRMS . — Human Resource Management System
 
-This is a assignment project for the EThara-AI done by Vivek Rawat.
----
+## This is a assignment project for the EThara-AI done by Vivek Rawat.
 
 ## 🔗 Live Links
 
-| Resource | URL |
-|----------|-----|
-| **Frontend (Vercel)** | [https://ethara-ai.vercel.app](https://ethara-ai-phi.vercel.app/) |
-| **Backend API (Render)** | [https://ethara-ai-backend.onrender.com](https://ethara-ai-j64o.onrender.com) |
-| **GitHub Repository** | [https://github.com/vkk-rawat/Ethara-AI](https://github.com/vkk-rawat/Ethara-AI) |
+| Resource                 | URL                                                                              |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| **Frontend (Vercel)**    | [https://ethara-ai.vercel.app](https://ethara-ai-phi.vercel.app/)                |
+| **Backend API (Render)** | [https://ethara-ai-backend.onrender.com](https://ethara-ai-j64o.onrender.com)    |
+| **GitHub Repository**    | [https://github.com/vkk-rawat/Ethara-AI](https://github.com/vkk-rawat/Ethara-AI) |
 
+## � Screenshots
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Add Employee
+
+![Add Employee](screenshots/Input.png)
+
+### Attendance Manager
+
+## ![Attendance Manager](screenshots/attendance.png)
 
 ---
 
 ## 📋 Project Overview
 
-HRMS  is a web-based internal HR tool that allows a single admin user to:
+HRMS is a web-based internal HR tool that allows a single admin user to:
 
 - **Employee Management** — Add, view, and delete employee records (Employee ID, Full Name, Email, Department)
 - **Attendance Tracking** — Mark daily attendance (Present / Absent), view per-employee records
@@ -30,29 +43,33 @@ The application is built with a **React** frontend and a **Python FastAPI** back
 ## �🛠 Tech Stack
 
 ### Frontend
-| Technology | Purpose |
-|------------|---------|
-| React 19 | UI library |
-| Vite 5 | Build tool & dev server |
-| CSS3 | Custom styling with glassmorphism, animations & gradients |
+
+| Technology | Purpose                                                   |
+| ---------- | --------------------------------------------------------- |
+| React 19   | UI library                                                |
+| Vite 5     | Build tool & dev server                                   |
+| CSS3       | Custom styling with glassmorphism, animations & gradients |
 
 ### Backend
-| Technology | Purpose |
-|------------|---------|
-| Python 3.13 | Runtime |
-| FastAPI | Web framework & REST API |
-| MongoDb | Database |
+
+| Technology  | Purpose                  |
+| ----------- | ------------------------ |
+| Python 3.13 | Runtime                  |
+| FastAPI     | Web framework & REST API |
+| MongoDb     | Database                 |
 
 ### Database
-| Technology | Purpose |
-|------------|---------|
+
+| Technology    | Purpose                     |
+| ------------- | --------------------------- |
 | MongoDB Atlas | Cloud-hosted NoSQL database |
 
 ### Deployment
-| Platform | Purpose |
-|----------|---------|
-| Vercel | Frontend hosting |
-| Render | Backend hosting |
+
+| Platform | Purpose          |
+| -------- | ---------------- |
+| Vercel   | Frontend hosting |
+| Render   | Backend hosting  |
 
 ---
 
@@ -100,37 +117,38 @@ Ethara-AI/
 
 ### Employees
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/employees` | List all employees |
-| `GET` | `/api/employees/:id` | Get employee by ID |
-| `POST` | `/api/employees` | Create new employee |
-| `PUT` | `/api/employees/:id` | Update employee |
-| `DELETE` | `/api/employees/:id` | Delete employee |
+| Method   | Endpoint             | Description         |
+| -------- | -------------------- | ------------------- |
+| `GET`    | `/api/employees`     | List all employees  |
+| `GET`    | `/api/employees/:id` | Get employee by ID  |
+| `POST`   | `/api/employees`     | Create new employee |
+| `PUT`    | `/api/employees/:id` | Update employee     |
+| `DELETE` | `/api/employees/:id` | Delete employee     |
 
 ### Attendance
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/attendance` | List all attendance (supports `?date=` and `?employeeId=` filters) |
-| `GET` | `/api/attendance/summary` | Dashboard summary stats |
-| `GET` | `/api/attendance/employee/:id` | Attendance records for a specific employee |
-| `POST` | `/api/attendance` | Mark attendance |
-| `PUT` | `/api/attendance/:id` | Update attendance record |
-| `DELETE` | `/api/attendance/:id` | Delete attendance record |
+| Method   | Endpoint                       | Description                                                        |
+| -------- | ------------------------------ | ------------------------------------------------------------------ |
+| `GET`    | `/api/attendance`              | List all attendance (supports `?date=` and `?employeeId=` filters) |
+| `GET`    | `/api/attendance/summary`      | Dashboard summary stats                                            |
+| `GET`    | `/api/attendance/employee/:id` | Attendance records for a specific employee                         |
+| `POST`   | `/api/attendance`              | Mark attendance                                                    |
+| `PUT`    | `/api/attendance/:id`          | Update attendance record                                           |
+| `DELETE` | `/api/attendance/:id`          | Delete attendance record                                           |
 
 ### Health
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | API info |
-| `GET` | `/api/health` | Health check |
+| Method | Endpoint      | Description  |
+| ------ | ------------- | ------------ |
+| `GET`  | `/`           | API info     |
+| `GET`  | `/api/health` | Health check |
 
 ---
 
 ## ✅ Validations & Error Handling
 
 ### Server-side Validations
+
 - **Required fields** — Employee ID, Full Name, Email, Department are mandatory
 - **Email format** — Validated via Pydantic `EmailStr`; auto-lowercased
 - **Duplicate handling** — Unique constraints on Employee ID and Email
@@ -139,11 +157,13 @@ Ethara-AI/
 - **Duplicate attendance** — Prevents marking same employee twice on the same date
 
 ### Error Responses
+
 - Proper HTTP status codes (`400`, `404`, `500`)
 - Consistent JSON structure: `{ "success": false, "message": "..." }`
 - Graceful MongoDB error handling with user-friendly messages
 
 ### Client-side UI States
+
 - **Loading states** — Animated spinner during data fetch
 - **Empty states** — Illustrated placeholder when no data exists
 - **Error states** — Retry button with error message display
@@ -162,6 +182,7 @@ Ethara-AI/
 ## 🖥 Running Locally
 
 ### Prerequisites
+
 - **Node.js** ≥ 18.x
 - **Python** ≥ 3.10
 - **MongoDB** — Local instance or [MongoDB Atlas](https://www.mongodb.com/atlas) connection string
@@ -252,12 +273,12 @@ The repository includes a `render.yaml` blueprint for one-click setup:
 
 ## ⚠️ Assumptions & Limitations
 
-| Assumption | Detail |
-|------------|--------|
-| Single admin user | No authentication or authorization required |
-| No pagination | Full lists loaded at once (suitable for small-to-medium datasets) |
-| Render cold starts | Free-tier backend may take ~30s on first request after inactivity |
-| Scope exclusions | Leave management, payroll, and advanced HR features are out of scope |
-| Browser support | Modern browsers required (CSS `backdrop-filter` for glassmorphism effects) |
+| Assumption         | Detail                                                                     |
+| ------------------ | -------------------------------------------------------------------------- |
+| Single admin user  | No authentication or authorization required                                |
+| No pagination      | Full lists loaded at once (suitable for small-to-medium datasets)          |
+| Render cold starts | Free-tier backend may take ~30s on first request after inactivity          |
+| Scope exclusions   | Leave management, payroll, and advanced HR features are out of scope       |
+| Browser support    | Modern browsers required (CSS `backdrop-filter` for glassmorphism effects) |
 
 ---
