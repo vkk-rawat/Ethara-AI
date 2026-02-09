@@ -11,7 +11,6 @@ This is a assignment project for the EThara-AI done by Vivek Rawat.
 | **Backend API (Render)** | [https://ethara-ai-backend.onrender.com](https://ethara-ai-j64o.onrender.com) |
 | **GitHub Repository** | [https://github.com/vkk-rawat/Ethara-AI](https://github.com/vkk-rawat/Ethara-AI) |
 
-> **Note:** The Render free tier spins down after inactivity. The first request may take ~30 seconds to cold-start.
 
 ---
 
