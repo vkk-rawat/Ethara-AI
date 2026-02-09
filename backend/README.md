@@ -10,7 +10,7 @@
 ### Installation
 
 ```bash
-cd backend-python
+cd backend
 pip install -r requirements.txt
 ```
 

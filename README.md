@@ -40,10 +40,7 @@ The application is built with a **React** frontend and a **Python FastAPI** back
 |------------|---------|
 | Python 3.13 | Runtime |
 | FastAPI | Web framework & REST API |
-| Motor | Async MongoDB driver |
-| Pydantic v2 | Request validation & settings |
-| Uvicorn | ASGI server |
-| Certifi | SSL certificate bundle for MongoDB Atlas |
+| MongoDb | Database |
 
 ### Database
 | Technology | Purpose |
@@ -66,7 +63,7 @@ Ethara-AI/
 ├── render.yaml                  # Render deployment blueprint
 ├── .gitignore
 │
-├── backend-python/              # FastAPI backend
+├── backend/                     # FastAPI backend
 │   ├── main.py                  # App entry point, lifespan, CORS, routers
 │   ├── config.py                # Pydantic settings (env vars)
 │   ├── database.py              # MongoDB connection (motor + certifi)
@@ -178,20 +175,18 @@ cd Ethara-AI
 ### 2. Backend Setup
 
 ```bash
-cd backend-python
+cd backend
 
 # (Optional) Create a virtual environment
 python -m venv .venv
 # Windows:
 .venv\Scripts\activate
-# macOS/Linux:
-source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in `backend-python/`:
+Create a `.env` file in `backend/`:
 
 ```env
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/
@@ -234,7 +229,7 @@ The repository includes a `render.yaml` blueprint for one-click setup:
 
 1. Create a new **Web Service** on [Render](https://render.com)
 2. Connect the GitHub repository
-3. Set **Root Directory** → `backend-python`
+3. Set **Root Directory** → `backend`
 4. Set **Build Command** → `pip install -r requirements.txt`
 5. Set **Start Command** → `uvicorn main:app --host 0.0.0.0 --port $PORT`
 6. Add **Environment Variables**:
@@ -265,7 +260,3 @@ The repository includes a `render.yaml` blueprint for one-click setup:
 | Browser support | Modern browsers required (CSS `backdrop-filter` for glassmorphism effects) |
 
 ---
-
-## 📄 License
-
-This project was built as a full-stack coding assignment submission for **Ethara AI**.

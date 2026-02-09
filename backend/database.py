@@ -15,12 +15,15 @@ db = Database()
 async def connect_to_mongo():
     """Connect to MongoDB with proper SSL certificate handling."""
     print(f"Connecting to MongoDB...")
-    db.client = AsyncIOMotorClient(
-        settings.mongodb_uri,
-        tlsCAFile=certifi.where(),
-        serverSelectionTimeoutMS=30000,
-        connectTimeoutMS=30000,
-    )
+    client_kwargs = {
+        "serverSelectionTimeoutMS": 30000,
+        "connectTimeoutMS": 30000,
+    }
+    # Only use certifi CA bundle for Atlas (SRV) connections
+    if "mongodb+srv" in settings.mongodb_uri or "mongodb.net" in settings.mongodb_uri:
+        client_kwargs["tlsCAFile"] = certifi.where()
+
+    db.client = AsyncIOMotorClient(settings.mongodb_uri, **client_kwargs)
     # Verify connection
     await db.client.admin.command('ping')
     print("MongoDB connected successfully!")
