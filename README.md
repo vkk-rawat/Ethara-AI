@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-## Might take some time to load the application
 
-=======
 ## Might take some time to load the application due to large added mockup data (around 10-15s).
 >>>>>>> a56c28f1af0a71e9151e02e98908711411b444f4
 # HRMS . — Human Resource Management System
