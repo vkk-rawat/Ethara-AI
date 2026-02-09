@@ -10,12 +10,10 @@ router = APIRouter(prefix="/api/attendance", tags=["attendance"])
 
 
 def serialize_attendance(attendance: dict) -> dict:
-    """Convert MongoDB document to JSON-serializable dict."""
     if attendance:
         attendance["_id"] = str(attendance["_id"])
         if "employeeId" in attendance and isinstance(attendance["employeeId"], ObjectId):
             attendance["employeeId"] = str(attendance["employeeId"])
-        # Handle date serialization
         if "date" in attendance and isinstance(attendance["date"], datetime):
             attendance["date"] = attendance["date"].isoformat().split("T")[0]
     return attendance
@@ -26,14 +24,11 @@ async def get_all_attendance(
     date_filter: Optional[str] = Query(None, alias="date"),
     employee_id: Optional[str] = Query(None, alias="employeeId")
 ):
-    """Get all attendance records with optional filters."""
     try:
         collection = get_attendance_collection()
 
-        # Build query
         query = {}
         if date_filter:
-            # Parse date and create range for the entire day
             try:
                 filter_date = datetime.fromisoformat(
                     date_filter.replace("Z", "+00:00"))
@@ -51,7 +46,6 @@ async def get_all_attendance(
         cursor = collection.find(query).sort("date", -1)
         records = await cursor.to_list(length=10000)
 
-        # Populate employee data (replace employeeId with employee object)
         employees_collection = get_employees_collection()
         for record in records:
             if "employeeId" in record:
@@ -78,12 +72,10 @@ async def get_all_attendance(
 
 @router.get("/summary")
 async def get_attendance_summary():
-    """Get attendance summary statistics."""
     try:
         attendance_collection = get_attendance_collection()
         employees_collection = get_employees_collection()
 
-        # Get counts
         total_employees = await employees_collection.count_documents({})
         total_records = await attendance_collection.count_documents({})
         present_count = await attendance_collection.count_documents({"status": "Present"})
@@ -109,7 +101,6 @@ async def get_attendance_summary():
 
 @router.get("/employee/{employee_id}")
 async def get_employee_attendance(employee_id: str):
-    """Get attendance records for a specific employee."""
     try:
         if not ObjectId.is_valid(employee_id):
             raise HTTPException(
@@ -121,7 +112,6 @@ async def get_employee_attendance(employee_id: str):
         collection = get_attendance_collection()
         employees_collection = get_employees_collection()
 
-        # Verify employee exists
         employee = await employees_collection.find_one({"_id": ObjectId(employee_id)})
         if not employee:
             raise HTTPException(
@@ -133,10 +123,8 @@ async def get_employee_attendance(employee_id: str):
             {"employeeId": ObjectId(employee_id)}).sort("date", -1)
         records = await cursor.to_list(length=10000)
 
-        # Calculate total present days
         total_present = sum(1 for r in records if r.get("status") == "Present")
 
-        # Add employee info to each record (replace employeeId with object)
         for record in records:
             record["employeeId"] = {
                 "_id": str(employee["_id"]),
@@ -162,7 +150,6 @@ async def get_employee_attendance(employee_id: str):
 
 @router.get("/{attendance_id}")
 async def get_attendance(attendance_id: str):
-    """Get a single attendance record by ID."""
     try:
         if not ObjectId.is_valid(attendance_id):
             raise HTTPException(
@@ -181,7 +168,6 @@ async def get_attendance(attendance_id: str):
                         "message": "Attendance record not found"}
             )
 
-        # Populate employee
         if "employeeId" in record:
             employees_collection = get_employees_collection()
             employee = await employees_collection.find_one({"_id": record["employeeId"]})
@@ -209,12 +195,10 @@ async def get_attendance(attendance_id: str):
 
 @router.post("", status_code=status.HTTP_201_CREATED)
 async def create_attendance(attendance: AttendanceCreate):
-    """Create a new attendance record."""
     try:
         collection = get_attendance_collection()
         employees_collection = get_employees_collection()
 
-        # Validate employee exists
         if not ObjectId.is_valid(attendance.employeeId):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -229,14 +213,12 @@ async def create_attendance(attendance: AttendanceCreate):
                 detail={"success": False, "message": "Employee not found"}
             )
 
-        # Parse date
         try:
             attendance_date = datetime.fromisoformat(
                 attendance.date.replace("Z", "+00:00"))
         except ValueError:
             attendance_date = datetime.strptime(attendance.date, "%Y-%m-%d")
 
-        # Check for duplicate attendance on same day
         start_of_day = datetime(attendance_date.year,
                                 attendance_date.month, attendance_date.day)
         end_of_day = datetime(
@@ -254,7 +236,6 @@ async def create_attendance(attendance: AttendanceCreate):
                     "success": False, "message": "Attendance already marked for this employee on this date"}
             )
 
-        # Create attendance document
         now = datetime.utcnow()
         attendance_doc = {
             "employeeId": ObjectId(attendance.employeeId),
@@ -267,7 +248,6 @@ async def create_attendance(attendance: AttendanceCreate):
         result = await collection.insert_one(attendance_doc)
         attendance_doc["_id"] = result.inserted_id
 
-        # Add employee info to response (replace employeeId with object)
         attendance_doc["employeeId"] = {
             "_id": str(employee["_id"]),
             "fullName": employee.get("fullName", ""),
@@ -292,7 +272,6 @@ async def create_attendance(attendance: AttendanceCreate):
 
 @router.put("/{attendance_id}")
 async def update_attendance(attendance_id: str, attendance: AttendanceUpdate):
-    """Update an existing attendance record."""
     try:
         if not ObjectId.is_valid(attendance_id):
             raise HTTPException(
@@ -303,7 +282,6 @@ async def update_attendance(attendance_id: str, attendance: AttendanceUpdate):
 
         collection = get_attendance_collection()
 
-        # Check if record exists
         existing = await collection.find_one({"_id": ObjectId(attendance_id)})
         if not existing:
             raise HTTPException(
@@ -312,7 +290,6 @@ async def update_attendance(attendance_id: str, attendance: AttendanceUpdate):
                         "message": "Attendance record not found"}
             )
 
-        # Build update data
         update_data = {}
 
         if attendance.status is not None:
@@ -339,7 +316,6 @@ async def update_attendance(attendance_id: str, attendance: AttendanceUpdate):
             {"$set": update_data}
         )
 
-        # Fetch updated record with employee info
         updated = await collection.find_one({"_id": ObjectId(attendance_id)})
 
         if "employeeId" in updated:
@@ -370,7 +346,6 @@ async def update_attendance(attendance_id: str, attendance: AttendanceUpdate):
 
 @router.delete("/{attendance_id}")
 async def delete_attendance(attendance_id: str):
-    """Delete an attendance record."""
     try:
         if not ObjectId.is_valid(attendance_id):
             raise HTTPException(

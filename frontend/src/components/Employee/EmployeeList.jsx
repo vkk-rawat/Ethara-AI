@@ -29,7 +29,6 @@ const EmployeeList = ({ onViewAttendance, showToast }) => {
 
       setEmployees(empResponse.data || []);
 
-      // Calculate attendance stats per employee
       const stats = {};
       (attResponse.data || []).forEach((record) => {
         const empId = record.employeeId?._id;

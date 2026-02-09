@@ -17,5 +17,4 @@ def get_settings() -> Settings:
     return Settings()
 
 
-# Create singleton instance
 settings = get_settings()

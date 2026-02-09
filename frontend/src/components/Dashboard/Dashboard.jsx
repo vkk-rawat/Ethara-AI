@@ -68,7 +68,6 @@ const Dashboard = ({ onNavigate }) => {
         </p>
       </div>
 
-      {/* Stats Cards */}
       <div className="stats-grid">
         <div className="stat-card employees">
           <div className="stat-icon">
@@ -216,7 +215,6 @@ const Dashboard = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Attendance Rate */}
       <div className="attendance-rate-card">
         <h3>Overall Attendance Rate</h3>
         <div className="rate-container">
@@ -234,9 +232,7 @@ const Dashboard = ({ onNavigate }) => {
         </p>
       </div>
 
-      {/* Two Column Layout */}
       <div className="dashboard-grid">
-        {/* Employee Summary */}
         <div className="dashboard-card">
           <div className="card-header">
             <h3>Employees by Department</h3>
@@ -266,7 +262,6 @@ const Dashboard = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Recent Attendance */}
         <div className="dashboard-card">
           <div className="card-header">
             <h3>Recent Attendance</h3>

@@ -145,7 +145,6 @@ const EmployeeCard = ({
         </div>
       </div>
 
-      {/* Attendance Stats */}
       <div className="attendance-stats">
         <div className="stat-item present">
           <span className="stat-number">{attendanceStats?.present || 0}</span>

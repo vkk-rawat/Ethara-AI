@@ -5,7 +5,6 @@ from bson import ObjectId
 
 
 class PyObjectId(str):
-    """Custom type for MongoDB ObjectId."""
 
     @classmethod
     def __get_validators__(cls):
@@ -20,7 +19,6 @@ class PyObjectId(str):
         raise ValueError("Invalid ObjectId")
 
 
-# Employee Models
 class EmployeeCreate(BaseModel):
     employeeId: str = Field(..., min_length=1,
                             description="Unique employee ID")
@@ -71,7 +69,6 @@ class EmployeeResponse(BaseModel):
         from_attributes = True
 
 
-# Attendance Models
 class AttendanceCreate(BaseModel):
     employeeId: str = Field(..., description="Employee MongoDB ID")
     date: str = Field(..., description="Date in YYYY-MM-DD format")
@@ -116,7 +113,6 @@ class AttendanceResponse(BaseModel):
         from_attributes = True
 
 
-# API Response Models
 class SuccessResponse(BaseModel):
     success: bool = True
     message: str
