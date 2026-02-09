@@ -1,4 +1,4 @@
-## Might take some time to load the application 
+## Might take some time to load the application due to large added mockup data (around 10-15s).
 # HRMS . — Human Resource Management System
 
 This is a assignment project for the EThara-AI done by Vivek Rawat.
