@@ -1,250 +1,273 @@
-# HRMS Lite
+# HRMS Lite — Human Resource Management System
 
-A lightweight Human Resource Management System (HRMS) for managing employee records and tracking daily attendance.
+A lightweight, full-stack Human Resource Management System that enables admins to manage employee records and track daily attendance through a clean, professional web interface.
 
-![HRMS Lite](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)
-![React](https://img.shields.io/badge/React-19-blue.svg)
-![MongoDB](https://img.shields.io/badge/MongoDB-7+-green.svg)
+---
 
-## Features
+## 🔗 Live Links
 
-### Employee Management
+| Resource | URL |
+|----------|-----|
+| **Frontend (Vercel)** | [https://ethara-ai.vercel.app](https://ethara-ai.vercel.app) |
+| **Backend API (Render)** | [https://ethara-ai-backend.onrender.com](https://ethara-ai-backend.onrender.com) |
+| **GitHub Repository** | [https://github.com/vkk-rawat/Ethara-AI](https://github.com/vkk-rawat/Ethara-AI) |
 
-- Add new employees with Employee ID, Name, Email, and Department
-- View all employees in a responsive card-based layout
-- Search employees by name, ID, email, or department
-- Delete employees from the system
+> **Note:** The Render free tier spins down after inactivity. The first request may take ~30 seconds to cold-start.
 
-### Attendance Management
+---
 
-- Mark daily attendance for employees (Present/Absent)
-- View attendance records for all employees or filter by specific employee
-- Filter attendance by date
-- Update attendance status
-- Delete attendance records
+## 📋 Project Overview
 
-### UI/UX Features
+HRMS Lite is a web-based internal HR tool that allows a single admin user to:
 
-- Clean, professional, production-ready interface
-- Loading states during API calls
-- Empty states with helpful guidance
-- Error states with retry options
-- Toast notifications for success/error feedback
-- Fully responsive design for mobile and desktop
+- **Employee Management** — Add, view, and delete employee records (Employee ID, Full Name, Email, Department)
+- **Attendance Tracking** — Mark daily attendance (Present / Absent), view per-employee records
+- **Dashboard** — Real-time summary with total employees, attendance rate, present/absent counts, and recent activity
 
-## Tech Stack
+The application is built with a **React** frontend and a **Python FastAPI** backend, persisting data in **MongoDB Atlas**.
+
+---
+
+## 🛠 Tech Stack
 
 ### Frontend
-
-- **React 19** - Modern React with hooks
-- **Vite** - Fast build tool and dev server
-- **CSS3** - Custom styling with CSS variables and modern CSS features
+| Technology | Purpose |
+|------------|---------|
+| React 19 | UI library |
+| Vite 5 | Build tool & dev server |
+| CSS3 | Custom styling with glassmorphism, animations & gradients |
 
 ### Backend
+| Technology | Purpose |
+|------------|---------|
+| Python 3.13 | Runtime |
+| FastAPI | Web framework & REST API |
+| Motor | Async MongoDB driver |
+| Pydantic v2 | Request validation & settings |
+| Uvicorn | ASGI server |
+| Certifi | SSL certificate bundle for MongoDB Atlas |
 
-- **Node.js** - JavaScript runtime
-- **Express.js** - Web application framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB object modeling
+### Database
+| Technology | Purpose |
+|------------|---------|
+| MongoDB Atlas | Cloud-hosted NoSQL database |
 
-## Project Structure
+### Deployment
+| Platform | Purpose |
+|----------|---------|
+| Vercel | Frontend hosting |
+| Render | Backend hosting |
+
+---
+
+## 🏗 Project Structure
 
 ```
-hrms-lite/
-├── backend/
-│   ├── models/
-│   │   ├── Employee.js       # Employee schema
-│   │   └── Attendance.js     # Attendance schema
-│   ├── routes/
-│   │   ├── employeeRoutes.js # Employee API endpoints
-│   │   └── attendanceRoutes.js # Attendance API endpoints
-│   ├── server.js             # Express server setup
-│   ├── package.json
-│   └── .env.example
+Ethara-AI/
+├── README.md
+├── render.yaml                  # Render deployment blueprint
+├── .gitignore
 │
-├── frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   │   └── apiService.js # API client
-│   │   ├── components/
-│   │   │   ├── Header/
-│   │   │   ├── Employee/
-│   │   │   ├── Attendance/
-│   │   │   └── common/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── package.json
-│   └── vite.config.js
+├── backend-python/              # FastAPI backend
+│   ├── main.py                  # App entry point, lifespan, CORS, routers
+│   ├── config.py                # Pydantic settings (env vars)
+│   ├── database.py              # MongoDB connection (motor + certifi)
+│   ├── models.py                # Pydantic request/response models
+│   ├── requirements.txt         # Python dependencies
+│   └── routes/
+│       ├── employees.py         # CRUD endpoints for employees
+│       └── attendance.py        # CRUD + summary endpoints for attendance
 │
-└── README.md
+└── frontend/                    # React + Vite frontend
+    ├── index.html
+    ├── package.json
+    ├── vite.config.js
+    ├── vercel.json              # Vercel deployment config
+    └── src/
+        ├── App.jsx              # Root component with tab navigation
+        ├── App.css
+        ├── index.css            # Global styles & CSS variables
+        ├── main.jsx             # React entry point
+        ├── api/
+        │   └── apiService.js    # API client (employeeAPI, attendanceAPI)
+        └── components/
+            ├── Header/          # Navigation header
+            ├── Dashboard/       # Summary stats & recent activity
+            ├── Employee/        # EmployeeList, EmployeeCard, EmployeeForm
+            ├── Attendance/      # AttendanceManager, AttendanceForm
+            └── common/          # Toast, LoadingSpinner, EmptyState, ErrorState
 ```
 
-## API Endpoints
+---
+
+## 🚀 API Endpoints
 
 ### Employees
 
-| Method | Endpoint             | Description         |
-| ------ | -------------------- | ------------------- |
-| GET    | `/api/employees`     | Get all employees   |
-| GET    | `/api/employees/:id` | Get employee by ID  |
-| POST   | `/api/employees`     | Create new employee |
-| PUT    | `/api/employees/:id` | Update employee     |
-| DELETE | `/api/employees/:id` | Delete employee     |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/employees` | List all employees |
+| `GET` | `/api/employees/:id` | Get employee by ID |
+| `POST` | `/api/employees` | Create new employee |
+| `PUT` | `/api/employees/:id` | Update employee |
+| `DELETE` | `/api/employees/:id` | Delete employee |
 
 ### Attendance
 
-| Method | Endpoint                        | Description                |
-| ------ | ------------------------------- | -------------------------- |
-| GET    | `/api/attendance`               | Get all attendance records |
-| GET    | `/api/attendance/employee/:id`  | Get attendance by employee |
-| GET    | `/api/attendance/summary/stats` | Get attendance statistics  |
-| POST   | `/api/attendance`               | Mark attendance            |
-| PUT    | `/api/attendance/:id`           | Update attendance          |
-| DELETE | `/api/attendance/:id`           | Delete attendance record   |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/attendance` | List all attendance (supports `?date=` and `?employeeId=` filters) |
+| `GET` | `/api/attendance/summary` | Dashboard summary stats |
+| `GET` | `/api/attendance/employee/:id` | Attendance records for a specific employee |
+| `POST` | `/api/attendance` | Mark attendance |
+| `PUT` | `/api/attendance/:id` | Update attendance record |
+| `DELETE` | `/api/attendance/:id` | Delete attendance record |
 
-## Prerequisites
+### Health
 
-Before running this project, make sure you have:
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | API info |
+| `GET` | `/api/health` | Health check |
 
-- **Node.js** >= 18.x
-- **npm** >= 9.x
-- **MongoDB** (local installation or MongoDB Atlas account)
+---
 
-## Getting Started
+## ✅ Validations & Error Handling
 
-### 1. Clone the Repository
+### Server-side Validations
+- **Required fields** — Employee ID, Full Name, Email, Department are mandatory
+- **Email format** — Validated via Pydantic `EmailStr`; auto-lowercased
+- **Duplicate handling** — Unique constraints on Employee ID and Email
+- **Date format** — Attendance date validated as `YYYY-MM-DD`
+- **Attendance status** — Restricted to `"Present"` or `"Absent"` (Literal type)
+- **Duplicate attendance** — Prevents marking same employee twice on the same date
+
+### Error Responses
+- Proper HTTP status codes (`400`, `404`, `500`)
+- Consistent JSON structure: `{ "success": false, "message": "..." }`
+- Graceful MongoDB error handling with user-friendly messages
+
+### Client-side UI States
+- **Loading states** — Animated spinner during data fetch
+- **Empty states** — Illustrated placeholder when no data exists
+- **Error states** — Retry button with error message display
+- **Toast notifications** — Success/error feedback on all actions
+
+---
+
+## 💎 Bonus Features Implemented
+
+- ✅ **Filter attendance records by date** — Date picker filter on the attendance view
+- ✅ **Total present days per employee** — Displayed in employee attendance detail view
+- ✅ **Dashboard summary** — Total employees, attendance rate, present/absent counts, recent records table
+
+---
+
+## 🖥 Running Locally
+
+### Prerequisites
+- **Node.js** ≥ 18.x
+- **Python** ≥ 3.10
+- **MongoDB** — Local instance or [MongoDB Atlas](https://www.mongodb.com/atlas) connection string
+
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/hrms-lite.git
-cd hrms-lite
+git clone https://github.com/vkk-rawat/Ethara-AI.git
+cd Ethara-AI
 ```
 
 ### 2. Backend Setup
 
 ```bash
-# Navigate to backend directory
-cd backend
+cd backend-python
+
+# (Optional) Create a virtual environment
+python -m venv .venv
+# Windows:
+.venv\Scripts\activate
+# macOS/Linux:
+source .venv/bin/activate
 
 # Install dependencies
-npm install
-
-# Create environment file
-cp .env.example .env
-
-# Edit .env and add your MongoDB connection string
-# MONGODB_URI=mongodb://localhost:27017/hrms-lite
-# OR for MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/hrms-lite
-
-# Start the server
-npm run dev
+pip install -r requirements.txt
 ```
 
-The backend will run on `http://localhost:5000`
+Create a `.env` file in `backend-python/`:
+
+```env
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/
+DATABASE_NAME=hrms-lite
+PORT=5000
+```
+
+Start the backend:
+
+```bash
+python main.py
+```
+
+The API will be available at **http://localhost:5000**. Interactive API docs at **http://localhost:5000/docs**.
 
 ### 3. Frontend Setup
 
+Open a new terminal:
+
 ```bash
-# Open a new terminal and navigate to frontend directory
 cd frontend
 
 # Install dependencies
 npm install
 
-# Start the development server
+# Start development server
 npm run dev
 ```
 
-The frontend will run on `http://localhost:3000`
-
-### 4. Access the Application
-
-Open your browser and navigate to `http://localhost:3000`
-
-## Environment Variables
-
-### Backend (.env)
-
-| Variable      | Description                          | Required |
-| ------------- | ------------------------------------ | -------- |
-| `PORT`        | Server port (default: 5000)          | No       |
-| `MONGODB_URI` | MongoDB connection string            | Yes      |
-| `NODE_ENV`    | Environment (development/production) | No       |
-
-### Frontend (.env)
-
-| Variable       | Description                      | Required |
-| -------------- | -------------------------------- | -------- |
-| `VITE_API_URL` | Backend API URL (for production) | No       |
-
-## Validation Rules
-
-### Employee
-
-- **Employee ID**: Required, must be unique
-- **Full Name**: Required
-- **Email**: Required, must be valid email format, must be unique
-- **Department**: Required
-
-### Attendance
-
-- **Employee**: Required, must be a valid employee
-- **Date**: Required, cannot mark attendance for the same date twice
-- **Status**: Required, must be "Present" or "Absent"
-
-## Error Handling
-
-The API returns consistent error responses:
-
-```json
-{
-  "success": false,
-  "message": "Error description here",
-  "error": "Detailed error (development only)"
-}
-```
-
-HTTP Status Codes:
-
-- `200` - Success
-- `201` - Created
-- `400` - Bad Request (validation error)
-- `404` - Not Found
-- `500` - Internal Server Error
-
-## Assumptions & Limitations
-
-1. **No Authentication**: This is a single-admin system without login functionality
-2. **Simple Attendance**: Only Present/Absent status, no time tracking
-3. **No Pagination**: Suitable for small to medium employee counts
-4. **Date-based Attendance**: One attendance record per employee per day
-5. **Cascading Deletes**: Deleting an employee does not automatically delete their attendance records
-
-## Future Enhancements
-
-- User authentication and role-based access
-- Bulk attendance marking
-- Attendance reports and analytics
-- Employee profile photos
-- Department management
-- Export functionality (CSV, PDF)
-- Pagination for large datasets
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the ISC License.
+The app will be available at **http://localhost:3000**.  
+The Vite dev server automatically proxies `/api` requests to `http://localhost:5000`.
 
 ---
 
-Built with care for clean code and great user experience.
+## 🌐 Deployment Guide
+
+### Backend → Render
+
+The repository includes a `render.yaml` blueprint for one-click setup:
+
+1. Create a new **Web Service** on [Render](https://render.com)
+2. Connect the GitHub repository
+3. Set **Root Directory** → `backend-python`
+4. Set **Build Command** → `pip install -r requirements.txt`
+5. Set **Start Command** → `uvicorn main:app --host 0.0.0.0 --port $PORT`
+6. Add **Environment Variables**:
+   - `MONGODB_URI` — Your MongoDB Atlas connection string
+   - `DATABASE_NAME` — `hrms-lite`
+
+> ⚠️ **MongoDB Atlas Network Access:** Add `0.0.0.0/0` to the IP Access List to allow connections from Render's dynamic IPs.
+
+### Frontend → Vercel
+
+1. Import the GitHub repository on [Vercel](https://vercel.com)
+2. Set **Root Directory** → `frontend`
+3. Set **Framework Preset** → `Vite`
+4. Add **Environment Variable**:
+   - `VITE_API_URL` → `https://<your-render-service>.onrender.com/api`
+5. Deploy
+
+---
+
+## ⚠️ Assumptions & Limitations
+
+| Assumption | Detail |
+|------------|--------|
+| Single admin user | No authentication or authorization required |
+| No pagination | Full lists loaded at once (suitable for small-to-medium datasets) |
+| Render cold starts | Free-tier backend may take ~30s on first request after inactivity |
+| Scope exclusions | Leave management, payroll, and advanced HR features are out of scope |
+| Browser support | Modern browsers required (CSS `backdrop-filter` for glassmorphism effects) |
+
+---
+
+## 📄 License
+
+This project was built as a full-stack coding assignment submission for **Ethara AI**.
