@@ -1,0 +1,337 @@
+.attendance-manager {
+  padding: 28px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: attendFadeIn 0.5s ease;
+}
+
+@keyframes attendFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  gap: 16px;
+}
+
+.attendance-header .header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.btn-back {
+  width: 42px;
+  height: 42px;
+  padding: 9px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(229, 231, 235, 0.6);
+  border-radius: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.btn-back:hover {
+  background: white;
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.btn-back svg {
+  width: 100%;
+  height: 100%;
+}
+
+.attendance-header h2 {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #1f2937 0%, #667eea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.employee-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 6px;
+  display: block;
+  font-weight: 500;
+}
+
+.attendance-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.filter-group select,
+.filter-group input[type="date"] {
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  color: #111827;
+  min-width: 200px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.filter-group select:focus,
+.filter-group input[type="date"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+}
+
+.filter-clear {
+  padding: 8px 16px;
+  font-size: 0.8125rem;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.08) 0%,
+    rgba(118, 75, 162, 0.08) 100%
+  );
+  border: none;
+  border-radius: 8px;
+  color: #667eea;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-clear:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.15) 0%,
+    rgba(118, 75, 162, 0.15) 100%
+  );
+  color: #764ba2;
+}
+
+.attendance-table-container {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 18px;
+  border: 1px solid rgba(229, 231, 235, 0.6);
+  overflow: hidden;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th {
+  text-align: left;
+  padding: 16px 22px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-bottom: 2px solid rgba(229, 231, 235, 0.6);
+}
+
+.attendance-table td {
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(243, 244, 246, 0.8);
+}
+
+.attendance-table tr:last-child td {
+  border-bottom: none;
+}
+
+.attendance-table tr {
+  transition: all 0.2s ease;
+}
+
+.attendance-table tr:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.03) 0%,
+    rgba(118, 75, 162, 0.03) 100%
+  );
+}
+
+.employee-info-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.emp-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+.emp-id {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.date-cell {
+  color: #374151;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.status-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.status-badge.present {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #059669;
+}
+
+.status-badge.absent {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #dc2626;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-status {
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  background: rgba(243, 244, 246, 0.8);
+  border: none;
+  border-radius: 8px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-status:hover {
+  background: rgba(229, 231, 235, 0.8);
+  color: #374151;
+  transform: scale(1.08);
+}
+
+.btn-status.active {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #059669;
+}
+
+.btn-status.active.absent {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #dc2626;
+}
+
+.btn-status svg {
+  width: 100%;
+  height: 100%;
+}
+
+.btn-delete-sm {
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-delete-sm:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  transform: scale(1.08);
+}
+
+.btn-delete-sm svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .attendance-manager {
+    padding: 16px;
+  }
+
+  .attendance-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attendance-filters {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group select,
+  .filter-group input[type="date"] {
+    width: 100%;
+  }
+
+  .attendance-table-container {
+    overflow-x: auto;
+  }
+
+  .attendance-table {
+    min-width: 600px;
+  }
+}

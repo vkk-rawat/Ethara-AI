@@ -1,0 +1,66 @@
+.status-options {
+  display: flex;
+  gap: 14px;
+}
+
+.status-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-weight: 600;
+  color: #6b7280;
+  background: rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.status-option input {
+  display: none;
+}
+
+.status-option svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.3s ease;
+}
+
+.status-option:hover {
+  border-color: #d1d5db;
+  background: rgba(249, 250, 251, 0.8);
+  transform: translateY(-2px);
+}
+
+.status-option.selected.present {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #059669;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+.status-option.selected.present svg {
+  transform: scale(1.15);
+}
+
+.status-option.selected.absent {
+  border-color: #ef4444;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #dc2626;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+}
+
+.status-option.selected.absent svg {
+  transform: scale(1.15);
+}
+
+@media (max-width: 480px) {
+  .status-options {
+    flex-direction: column;
+  }
+}
