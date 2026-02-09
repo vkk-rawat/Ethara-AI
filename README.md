@@ -1,15 +1,14 @@
 # HRMS Lite — Human Resource Management System
 
-A lightweight, full-stack Human Resource Management System that enables admins to manage employee records and track daily attendance through a clean, professional web interface.
-
+This is a assignment project for the EThara-AI done by Vivek Rawat.
 ---
 
 ## 🔗 Live Links
 
 | Resource | URL |
 |----------|-----|
-| **Frontend (Vercel)** | [https://ethara-ai.vercel.app](https://ethara-ai.vercel.app) |
-| **Backend API (Render)** | [https://ethara-ai-backend.onrender.com](https://ethara-ai-backend.onrender.com) |
+| **Frontend (Vercel)** | [https://ethara-ai.vercel.app](https://ethara-ai-phi.vercel.app/) |
+| **Backend API (Render)** | [https://ethara-ai-backend.onrender.com](https://ethara-ai-j64o.onrender.com) |
 | **GitHub Repository** | [https://github.com/vkk-rawat/Ethara-AI](https://github.com/vkk-rawat/Ethara-AI) |
 
 > **Note:** The Render free tier spins down after inactivity. The first request may take ~30 seconds to cold-start.
