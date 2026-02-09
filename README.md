@@ -26,7 +26,26 @@ The application is built with a **React** frontend and a **Python FastAPI** back
 
 ---
 
-## 🛠 Tech Stack
+## � Screenshots
+
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Employee List
+![Employee List](screenshots/employee-list.png)
+
+### Add Employee
+![Add Employee](screenshots/add-employee.png)
+
+### Attendance Manager
+![Attendance Manager](screenshots/attendance-manager.png)
+
+### Mark Attendance
+![Mark Attendance](screenshots/mark-attendance.png)
+
+---
+
+## �🛠 Tech Stack
 
 ### Frontend
 | Technology | Purpose |
